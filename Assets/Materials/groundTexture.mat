@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: groundTexture
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: bcda9a4af3b5d8246a2910cff3e5af44, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -40,8 +40,8 @@ Material:
         m_Scale: {x: 1, y: 20}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 52bcb65eb82f92644bbe5548c171df79, type: 3}
-        m_Scale: {x: 1, y: 20}
+        m_Texture: {fileID: 2800000, guid: bbb5db5b540801d4eaeeb434d2a2822a, type: 3}
+        m_Scale: {x: 1, y: 10}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -56,7 +56,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Ramp:
-        m_Texture: {fileID: 2800000, guid: 52bcb65eb82f92644bbe5548c171df79, type: 3}
+        m_Texture: {fileID: 2800000, guid: bbb5db5b540801d4eaeeb434d2a2822a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -72,16 +72,16 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _RimMax: 1
-    - _RimMin: 0.5
+    - _RimMin: 0.733
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.8867924, g: 0.53123885, b: 0.8615206, a: 1}
+    - _Color: {r: 0.9811321, g: 0.72659314, b: 0.96434927, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HColor: {r: 0.9811321, g: 0.9811321, b: 0.9811321, a: 1}
+    - _HColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.6}
-    - _SColor: {r: 0.29999998, g: 0.29999998, b: 0.29999998, a: 1}
+    - _SColor: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 1}
   m_BuildTextureStacks: []
