@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 public class stackScriptV2 : MonoBehaviour
 {
     //SLIDE COMPONENTS
@@ -16,10 +17,19 @@ public class stackScriptV2 : MonoBehaviour
     private float elapsedTime = 0;
     public GameObject stackItem,stackHolder;
 
+    public Vector3 stackPos;
+    
+
+    //****************
+    private int stackCount = 0;
+    public Text stackCountText;
+    public levelScriptV2 levelScriptV2;
+
+
     void Start()
     {
         Application.targetFrameRate = 60;
-       editStack(true,10);
+       //editStack(true,10);
     }
 
     
@@ -64,7 +74,7 @@ public class stackScriptV2 : MonoBehaviour
                     leftStack.Add(rightStack[rightStack.Count-1]);
                     rightStack.Remove(rightStack[rightStack.Count-1]);
                     leftStack[leftStack.Count-1].transform.DORotate(new Vector3(0,0,0),exchangeSpeed*2);
-                    leftStack[leftStack.Count-1].transform.DOJump(new Vector3(-1.25f,(leftStack[leftStack.Count-1].transform.localScale.y+stackOffset)*leftStack.Count,10),4,1,exchangeSpeed*2);
+                    leftStack[leftStack.Count-1].transform.DOJump(new Vector3(-stackPos.x,(leftStack[leftStack.Count-1].transform.localScale.y+stackOffset)*leftStack.Count+stackPos.y,stackPos.z),4,1,exchangeSpeed*2);
                 }
                 else if(!isSlidingToLeft&&leftStack.Count>0)
                 {          
@@ -72,7 +82,7 @@ public class stackScriptV2 : MonoBehaviour
                     rightStack.Add(leftStack[leftStack.Count-1]);
                     leftStack.Remove(leftStack[leftStack.Count-1]);
                     rightStack[rightStack.Count-1].transform.DORotate(new Vector3(0,0,-180),exchangeSpeed*2);
-                    rightStack[rightStack.Count-1].transform.DOJump(new Vector3(1.25f,(rightStack[rightStack.Count-1].transform.localScale.y+stackOffset)*rightStack.Count,10),4,1,exchangeSpeed*2);
+                    rightStack[rightStack.Count-1].transform.DOJump(new Vector3(stackPos.x,(rightStack[rightStack.Count-1].transform.localScale.y+stackOffset)*rightStack.Count+stackPos.y,stackPos.z),4,1,exchangeSpeed*2);
                 }
                 elapsedTime = 0;
             }
@@ -89,7 +99,7 @@ public class stackScriptV2 : MonoBehaviour
                 {
                     leftStack.Add(GameObject.Instantiate(stackItem,new Vector3(-10,-10,10),Quaternion.identity,stackHolder.transform));
                      leftStack[leftStack.Count-1].transform.DORotate(new Vector3(0,0,0),exchangeSpeed*2);
-                    leftStack[leftStack.Count-1].transform.DOJump(new Vector3(-1.25f,(leftStack[leftStack.Count-1].transform.localScale.y+stackOffset)*leftStack.Count,10),4,1,exchangeSpeed*2); 
+                    leftStack[leftStack.Count-1].transform.DOJump(new Vector3(-stackPos.x,(leftStack[leftStack.Count-1].transform.localScale.y+stackOffset)*leftStack.Count+stackPos.y,stackPos.z),4,1,exchangeSpeed*2); 
                 }    
             }
             else
@@ -117,7 +127,7 @@ public class stackScriptV2 : MonoBehaviour
                 {
                     rightStack.Add(GameObject.Instantiate(stackItem,new Vector3(10,-10,10),Quaternion.identity,stackHolder.transform));
                     rightStack[rightStack.Count-1].transform.DORotate(new Vector3(0,0,-180),exchangeSpeed*2);
-                    rightStack[rightStack.Count-1].transform.DOJump(new Vector3(1.25f,(rightStack[rightStack.Count-1].transform.localScale.y+stackOffset)*rightStack.Count,10),4,1,exchangeSpeed*2);  
+                    rightStack[rightStack.Count-1].transform.DOJump(new Vector3(stackPos.x,(rightStack[rightStack.Count-1].transform.localScale.y+stackOffset)*rightStack.Count+stackPos.y,stackPos.z),4,1,exchangeSpeed*2);  
                 }       
             }
             else
@@ -136,16 +146,45 @@ public class stackScriptV2 : MonoBehaviour
                 }  
             }
         }
+        stackCount = leftStack.Count+rightStack.Count;
+        stackCountText.text = stackCount.ToString();
     }
 
     private void OnCollisionEnter(Collision other) {
-        if (other.transform.GetComponent<gateScript>())
+        Debug.Log(other.transform.name);
+        if (other.transform.GetComponent<gate>())
         {
             bool isLeft;
             if (other.transform.position.x>0) isLeft = false;
             else isLeft = true;
-            editStack(isLeft,other.transform.GetComponent<gateScript>().gateValue);
+            editStack(isLeft,other.transform.GetComponent<gate>().value);
            
+        }
+        else if (other.transform.GetComponent<finish>())
+        {
+            
+            levelScriptV2.pauseLevel();
+            other.transform.GetComponent<finish>().finisSceneCameraPoisition(levelScriptV2.thisLevel,stackCount);
+        }
+        else if (other.gameObject.name.Equals("EmptyGround")){
+            bool isLeft;
+            if (other.transform.position.x>0) isLeft = false;
+            else isLeft = true;
+            stackToGround(other.transform.localScale.z,isLeft,other.gameObject);
+            editStack(!isLeft,-1); 
+        }
+        Debug.Log("boom");
+    }
+
+    public void stackToGround(float zLenght,bool isLeft, GameObject emptyGroundObject){
+        if (!isLeft && rightStack.Count>0)
+        {                 
+                GameObject stackItem = rightStack[rightStack.Count-1];
+                
+                stackItem.transform.parent = emptyGroundObject.transform;
+                stackItem.transform.DOMoveY(0,0.1f);
+                stackItem.transform.DOMoveZ(emptyGroundObject.transform.position.z+5,0.1f);     
+                Debug.Log("22222222222");
         }
     }
 }

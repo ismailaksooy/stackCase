@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 3afa0d789b0a7a44889733e17e274db1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - greenGateMaterial: {fileID: 2100000, guid: 517bfd63d63dc564db122f907d7d8d56, type: 2}
+  - redGateMaterial: {fileID: 2100000, guid: cdb7d55559a922b428d425ada6e98832, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
